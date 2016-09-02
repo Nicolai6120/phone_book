@@ -15,7 +15,7 @@ $this->title = 'Контакты';
 
     <div class="body-content">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-3">
                 <h2>Контакты</h2>
             </div>
         </div>
@@ -39,7 +39,7 @@ $this->title = 'Контакты';
                     echo GridView::widget([
                         'dataProvider' => $dataProvider,
                         'columns'=>[
-                            'id',
+                            //'id',
                             [
                                 'attribute' => 'name',
                                 'label' => 'Название контакта',
@@ -52,18 +52,13 @@ $this->title = 'Контакты';
                                 'attribute' => 'create_date',
                                 'label'=>'Добавлен',
                                 'value' => function ($data) {
-                                    return $data->create_date;
+                                    return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y');
                                 },
                             ],
                             [
                                 'class' => ActionColumn::className(),
-                                'template' => '{update} {delete}',
+                                'template' => '{delete}',
                                 'buttons' => [
-                                    'update' => function ($url, $model) {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                            'title' => 'Редактировать',
-                                        ]);
-                                    },
                                     'delete' => function ($url, $model) {
                                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                                             'title' =>'Удалить',
@@ -74,10 +69,6 @@ $this->title = 'Контакты';
                                 ],
 
                                 'urlCreator' => function ($action, $model, $key, $index) {
-                                    if ($action === 'update') {
-                                        $url ='/panel/adverts/edition/update/'.$model->id;
-                                        return $url;
-                                    }
                                     if ($action === 'delete') {
                                         $url ='/panel/adverts/edition/delete/'.$model->id;
                                         return $url;
