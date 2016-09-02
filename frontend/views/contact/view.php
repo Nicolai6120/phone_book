@@ -1,7 +1,9 @@
 <?php
 
+use yii\grid\GridView;
+use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Contact */
@@ -25,14 +27,65 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'create_date',
-            'creator_ip',
-        ],
-    ]) ?>
+    <div class="row">
+        <div class="col-lg-8">
+            <?php
+                $dataProvider = new ActiveDataProvider([
+                    'query' => $model->getPhones(),
+                    'pagination' => [
+                        'pageSize' => 30,
+                    ],
+                ]);
+
+                \yii\widgets\Pjax::begin([
+                    'enablePushState'=>false
+                ]);
+
+                echo GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'columns'=>[
+                        //'id',
+                        [
+                            'attribute' => 'number',
+                            'header' => 'Номер',
+                            'format' => 'raw',
+                            'value' => function ($data) {
+                                return Html::a($data->number, ['contact/view', 'id' => $data->id]);
+                            },
+                        ],
+                        [
+                            'attribute' => 'create_date',
+                            'header'=>'Добавлен',
+                            'value' => function ($data) {
+                                return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y');
+                            },
+                        ],
+                        [
+                            'class' => ActionColumn::className(),
+                            'template' => '{delete}',
+                            'buttons' => [
+                                'delete' => function ($url, $model) {
+                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                        'title' =>'Удалить',
+                                        'data-confirm'=>"Вы действительно хотите удалить этот контакт?",
+                                        'data-pjax'=>'1'
+                                    ]);
+                                },
+                            ],
+
+                            'urlCreator' => function ($action, $model, $key, $index) {
+                                if ($action === 'delete') {
+                                    $url ='/panel/adverts/edition/delete/'.$model->id;
+                                    return $url;
+                                }
+                            }
+                        ]
+                    ],
+                ]);
+
+                \yii\widgets\Pjax::end();
+            ?>
+        </div>
+    </div>
 
 </div>
