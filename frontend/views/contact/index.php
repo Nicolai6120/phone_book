@@ -1,13 +1,13 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel common\models\ContactSearch */
+/* @var $model common\models\Contact */
 
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Контакты';
 ?>
@@ -23,12 +23,12 @@ $this->title = 'Контакты';
         </div>
 
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-7">
 
                 <?php
 
                 $dataProvider = new ActiveDataProvider([
-                    'query' => common\models\Contact::find(),
+                    'query' => $model::find(),
                     'pagination' => [
                         'pageSize' => 30,
                     ],
@@ -47,7 +47,7 @@ $this->title = 'Контакты';
                             'label' => 'Название контакта',
                             'format' => 'raw',
                             'value' => function ($data) {
-                                return Html::a($data->name, ['contact/view', 'id' => $data->id]);
+                                return Html::a($data->name, ['contact/view', 'id' => $data->id], ['data-pjax'=>'0']);
                             },
                         ],
                         [
@@ -69,6 +69,7 @@ $this->title = 'Контакты';
                                     ]);
                                 },
                             ],
+                            'contentOptions' => ['class' => 'text-center', 'style' => 'max-width:20px;'],
 
                             'urlCreator' => function ($action, $model, $key, $index) {
                                 if ($action === 'delete') {
@@ -85,6 +86,11 @@ $this->title = 'Контакты';
             </div>
             <div class="col-lg-3 col-lg-offset-1">
                 <a class="btn btn-default" href="http://www.yiiframework.com/doc/">Добавить контакт</a>
+
+                <?php $form = ActiveForm::begin(); ?>
+                <?= $form->field($model, 'name') ?>
+                <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
 
