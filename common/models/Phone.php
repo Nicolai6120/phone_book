@@ -42,10 +42,9 @@ class Phone extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'contact_id' => 'Contact ID',
-            'number' => 'Number',
-            'create_date' => 'Create Date',
-            'creator_ip' => 'Creator Ip',
+            'number' => 'Номер',
+            'create_date' => 'Дата создания',
+            'creator_ip' => 'IP создателя',
         ];
     }
 }
