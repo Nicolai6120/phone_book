@@ -84,12 +84,32 @@ $this->title = 'Контакты';
                 ?>
             </div>
             <div class="col-lg-3 col-lg-offset-1">
-                <a class="btn btn-default" href="http://www.yiiframework.com/doc/">Добавить контакт</a>
 
-                <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'name') ?>
-                <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>
-                <?php ActiveForm::end(); ?>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Добавить контакт
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse out">
+                            <div class="panel-body bg-default">
+                                <?php $form = ActiveForm::begin([
+                                    'action' => ['phone/create'],
+                                    'options' => [
+                                        'class' => 'form'
+                                    ]
+                                ]); ?>
+                                <?= $form->field($model, 'name') ?>
+                                <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>
+                                <?php ActiveForm::end(); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
 

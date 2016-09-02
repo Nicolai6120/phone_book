@@ -1,13 +1,14 @@
 <?php
 
+/* @var $this yii\web\View */
+/* @var $model common\models\Contact */
+/* @var $model common\models\Phone */
+
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
+use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use yii\helpers\Url;
-
-/* @var $this yii\web\View */
-/* @var $model common\models\Contact */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = $this->title;
@@ -31,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-6">
             <?php
                 $dataProvider = new ActiveDataProvider([
                     'query' => $model->getPhones(),
@@ -89,6 +90,33 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 \yii\widgets\Pjax::end();
             ?>
+        </div>
+        <div class="col-lg-3 col-lg-offset-1">
+
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                Добавить телефон
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse out">
+                        <div class="panel-body bg-default">
+                            <?php $form = ActiveForm::begin([
+                                'options' => [
+                                    'class' => 'form'
+                                ]
+                            ]); ?>
+                            <?= $form->field($phone, 'number') ?>
+                            <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>
+                            <?php ActiveForm::end(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
