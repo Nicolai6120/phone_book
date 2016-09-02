@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Phone;
 
 /**
  * This is the model class for table "contact".
@@ -45,5 +46,10 @@ class Contact extends \yii\db\ActiveRecord
             'create_date' => 'Дата создания',
             'creator_ip' => 'IP создателя',
         ];
+    }
+
+    public function getPhones()
+    {
+        return $this->hasMany(Phone::className(), ['contact_id'=>'id']);
     }
 }
