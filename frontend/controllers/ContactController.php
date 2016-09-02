@@ -35,13 +35,7 @@ class ContactController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ContactSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index');
     }
 
     /**
@@ -51,8 +45,10 @@ class ContactController extends Controller
      */
     public function actionView($id)
     {
+        $model = Contact::findOne($id);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
