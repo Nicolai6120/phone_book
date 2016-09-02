@@ -45,7 +45,7 @@ $this->title = 'Контакты';
                                 'label' => 'Название контакта',
                                 'format' => 'raw',
                                 'value' => function ($data) {
-                                    return Html::a($data->name, ['contact/view', 'id' => $data->id]);
+                                    return Html::a($data->name, ['contact/view', 'id' => $data->id], ['data-pjax'=>'0']);
                                 },
                             ],
                             [
