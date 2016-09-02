@@ -67,6 +67,7 @@ $this->title = 'Контакты';
                                         ]);
                                     },
                                 ],
+                                'contentOptions' => ['class' => 'text-center', 'style' => 'max-width:20px;'],
 
                                 'urlCreator' => function ($action, $model, $key, $index) {
                                     if ($action === 'delete') {

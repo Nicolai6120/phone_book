@@ -4,24 +4,27 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Contact */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Contacts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<div class="jumbotron"></div>
+
 <div class="contact-view">
 
     <h2><?= Html::encode($this->title) ?></h2>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы действительно хотите удалить этот телефон?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -43,19 +46,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 echo GridView::widget([
                     'dataProvider' => $dataProvider,
-                    'columns'=>[
+                    'columns' => [
                         //'id',
                         [
                             'attribute' => 'number',
                             'header' => 'Номер',
                             'format' => 'raw',
                             'value' => function ($data) {
-                                return Html::a($data->number, ['contact/view', 'id' => $data->id]);
+                                return Html::a($data->number, 'tel:'.$data->number);
                             },
                         ],
                         [
                             'attribute' => 'create_date',
-                            'header'=>'Добавлен',
+                            'header' => 'Добавлен',
                             'value' => function ($data) {
                                 return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y');
                             },
@@ -72,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]);
                                 },
                             ],
+                            'contentOptions' => ['class' => 'text-center', 'style' => 'max-width:20px;'],
 
                             'urlCreator' => function ($action, $model, $key, $index) {
                                 if ($action === 'delete') {
