@@ -14,15 +14,19 @@ $this->title = 'Контакты';
     <div class="jumbotron"></div>
 
     <div class="body-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Контакты</h2>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-8">
-                <h2>Контакты</h2>
 
                 <?php
 
                     $dataProvider = new ActiveDataProvider([
-                        'query' => $model,
+                        'query' => common\models\Contact::find(),
                         'pagination' => [
                             'pageSize' => 30,
                         ],
@@ -36,26 +40,22 @@ $this->title = 'Контакты';
                         'dataProvider' => $dataProvider,
                         'columns'=>[
                             'id',
-                            'name',
+                            //'name',
                             [
-                                'class' => 'yii\grid\DataColumn',
-                                'header'=>'Название контакта',
-                                'format' => 'html',
+                                'attribute' => 'name',
+                                'label' => 'Название контакта',
+                                'format' => 'raw',
                                 'value' => function ($data) {
-                                    return Html::a('<span class="fa fa-phone"></span>', $url, [
-                                        'title' => $data->name,
-                                    ]);
+                                    return Html::a($data->name, ['contact/view', 'id' => $data->id]);
                                 },
                             ],
-                            'create_date',
                             [
-                                'class' => 'yii\grid\DataColumn',
-                                'header'=>'Добавлен',
-    //                            'value' => function ($data) {
-    //                                return $data->create_date;
-    //                            },
+                                'attribute' => 'create_date',
+                                'label'=>'Добавлен',
+                                'value' => function ($data) {
+                                    return $data->create_date;
+                                },
                             ],
-                            'format',
                             [
                                 'class' => ActionColumn::className(),
                                 'template' => '{update} {delete}',
@@ -91,7 +91,7 @@ $this->title = 'Контакты';
                     \yii\widgets\Pjax::end();
                 ?>
             </div>
-            <div class="col lg-4">
+            <div class="col-lg-3 col-lg-offset-1">
                 <a class="btn btn-default" href="http://www.yiiframework.com/doc/">Добавить контакт</a>
             </div>
         </div>
