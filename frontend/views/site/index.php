@@ -2,50 +2,97 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+use yii\grid\GridView;
+use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
+use yii\helpers\Html;
+
+$this->title = 'Контакты';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+    <div class="jumbotron"></div>
 
     <div class="body-content">
 
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+            <div class="col-lg-8">
+                <h2>Контакты</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <?php
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                    $dataProvider = new ActiveDataProvider([
+                        'query' => $model,
+                        'pagination' => [
+                            'pageSize' => 30,
+                        ],
+                    ]);
+
+                    \yii\widgets\Pjax::begin([
+                        'enablePushState'=>false
+                    ]);
+
+                    echo GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'columns'=>[
+                            'id',
+                            'name',
+                            [
+                                'class' => 'yii\grid\DataColumn',
+                                'header'=>'Название контакта',
+                                'format' => 'html',
+                                'value' => function ($data) {
+                                    return Html::a('<span class="fa fa-phone"></span>', $url, [
+                                        'title' => $data->name,
+                                    ]);
+                                },
+                            ],
+                            'create_date',
+                            [
+                                'class' => 'yii\grid\DataColumn',
+                                'header'=>'Добавлен',
+    //                            'value' => function ($data) {
+    //                                return $data->create_date;
+    //                            },
+                            ],
+                            'format',
+                            [
+                                'class' => ActionColumn::className(),
+                                'template' => '{update} {delete}',
+                                'buttons' => [
+                                    'update' => function ($url, $model) {
+                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                            'title' => 'Редактировать',
+                                        ]);
+                                    },
+                                    'delete' => function ($url, $model) {
+                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                            'title' =>'Удалить',
+                                            'data-confirm'=>"Вы действительно хотите удалить этот контакт?",
+                                            'data-pjax'=>'1'
+                                        ]);
+                                    },
+                                ],
+
+                                'urlCreator' => function ($action, $model, $key, $index) {
+                                    if ($action === 'update') {
+                                        $url ='/panel/adverts/edition/update/'.$model->id;
+                                        return $url;
+                                    }
+                                    if ($action === 'delete') {
+                                        $url ='/panel/adverts/edition/delete/'.$model->id;
+                                        return $url;
+                                    }
+                                }
+                            ]
+                        ],
+                    ]);
+
+                    \yii\widgets\Pjax::end();
+                ?>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div class="col lg-4">
+                <a class="btn btn-default" href="http://www.yiiframework.com/doc/">Добавить контакт</a>
             </div>
         </div>
 

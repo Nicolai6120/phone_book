@@ -1,5 +1,6 @@
 <?php
 return [
+    'name' => 'Телефонная книга',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'db' => [
