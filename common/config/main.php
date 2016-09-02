@@ -1,6 +1,8 @@
 <?php
 return [
-    'name' => 'Телефонная книга',
+    'name' => 'Телефонна',
+    'language' => 'ru',
+    'timezone' => 'Europe/Moscow',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'db' => [

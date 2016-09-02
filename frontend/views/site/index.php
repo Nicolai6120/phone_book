@@ -40,7 +40,6 @@ $this->title = 'Контакты';
                         'dataProvider' => $dataProvider,
                         'columns'=>[
                             'id',
-                            //'name',
                             [
                                 'attribute' => 'name',
                                 'label' => 'Название контакта',
