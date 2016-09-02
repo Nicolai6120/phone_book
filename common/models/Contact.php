@@ -42,7 +42,7 @@ class Contact extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Название',
+            'name' => 'Название контакта',
             'create_date' => 'Дата создания',
             'creator_ip' => 'IP создателя',
         ];
