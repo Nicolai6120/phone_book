@@ -74,13 +74,6 @@ $this->title = 'Контакты';
                                 },
                             ],
                             'contentOptions' => ['class' => 'text-center', 'style' => 'max-width:20px;'],
-
-//                            'urlCreator' => function ($action, $data, $key, $index) {
-//                                if ($action === 'delete') {
-//                                    $url = Url::toRoute(['contact/delete/', 'id' => $data->id]);
-//                                    return $url;
-//                                }
-//                            }
                         ]
                     ],
                 ]);
