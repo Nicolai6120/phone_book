@@ -53,9 +53,13 @@ $this->title = 'Контакты';
                         ],
                         [
                             'attribute'=>'create_date',
+                            'format' => 'raw',
                             'label'=>'Добавлен',
                             'value'=>function ($data) {
-                                return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y hh:mm');
+                                return
+                                    Yii::$app->formatter->asDate($data->create_date, 'd MMM Y').
+                                    ' *** '.
+                                    Yii::$app->formatter->asDate($data->create_date, 'hh:mm');
                             },
                         ],
                         [
@@ -73,7 +77,7 @@ $this->title = 'Контакты';
                                     ]);
                                 },
                             ],
-                            'contentOptions' => ['class' => 'text-center', 'style' => 'max-width:20px;'],
+                            'contentOptions' => ['class' => 'text-center', 'style' => 'width:20px;'],
                         ]
                     ],
                 ]);

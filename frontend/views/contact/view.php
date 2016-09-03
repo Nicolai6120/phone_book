@@ -86,7 +86,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'create_date',
                             'header' => 'Добавлен',
                             'value' => function ($data) {
-                                return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y hh:mm');
+                                return
+                                    Yii::$app->formatter->asDate($data->create_date, 'd MMM Y').
+                                    ' *** '.
+                                    Yii::$app->formatter->asDate($data->create_date, 'hh:mm');
                             },
                         ],
                         [
@@ -104,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]);
                                 },
                             ],
-                            'contentOptions' => ['class' => 'text-center', 'style' => 'max-width:20px;'],
+                            'contentOptions' => ['class' => 'text-center', 'style' => 'width:20px;'],
                         ]
                     ],
                 ]);
