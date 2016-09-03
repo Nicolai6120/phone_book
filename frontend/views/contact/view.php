@@ -2,7 +2,8 @@
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Contact */
-/* @var $model common\models\Phone */
+/* @var $phone common\models\Phone */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;

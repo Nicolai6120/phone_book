@@ -2,6 +2,9 @@
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Contact */
+/* @var $date common\models\Contact */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
 
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -43,7 +46,6 @@ $this->title = 'Контакты';
                 echo GridView::widget([
                     'dataProvider' => $dataProvider,
                     'columns'=>[
-                        //'id',
                         [
                             'attribute' => 'name',
                             'format' => 'raw',

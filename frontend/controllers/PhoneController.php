@@ -59,7 +59,7 @@ class PhoneController extends Controller
 
     /**
      * Creates a new Phone model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the '/contact/view' page.
      * @return mixed
      */
     public function actionCreate()
@@ -81,7 +81,7 @@ class PhoneController extends Controller
 
     /**
      * Updates an existing Phone model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * If update is successful, the browser will be redirected to the '/contact/view' page.
      * @param integer $id
      * @return mixed
      */
@@ -100,7 +100,7 @@ class PhoneController extends Controller
 
     /**
      * Deletes an existing Phone model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * If deletion is successful, the browser will render '/contact/view' page.
      * @param integer $id
      * @return mixed
      */
