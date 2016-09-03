@@ -25,7 +25,7 @@ $this->title = 'Контакты';
         </div>
 
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-6">
 
                 <?php
 
@@ -55,7 +55,7 @@ $this->title = 'Контакты';
                             'attribute'=>'create_date',
                             'label'=>'Добавлен',
                             'value'=>function ($data) {
-                                return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y');
+                                return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y hh:mm');
                             },
                         ],
                         [
@@ -81,7 +81,7 @@ $this->title = 'Контакты';
                 \yii\widgets\Pjax::end();
                 ?>
             </div>
-            <div class="col-lg-3 col-lg-offset-1">
+            <div class="col-lg-4 col-lg-offset-1">
 
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">

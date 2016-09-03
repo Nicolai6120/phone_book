@@ -48,7 +48,8 @@ class Phone extends \yii\db\ActiveRecord
         return [
             [['contact_id', 'number'], 'required'],
             [['contact_id', 'creator_ip'], 'integer'],
-            [['number'], 'string', 'max' => 15],
+            [['number'], 'string', 'max' => 32],
+            [['number'], 'match', 'pattern'=>'/\+7 \(\d{3}\) \d{3} \d{2}-\d{2}/', 'message' => 'Формат телефона +7 (XXX) XXX XX-XX']
         ];
     }
 

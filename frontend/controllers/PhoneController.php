@@ -65,10 +65,10 @@ class PhoneController extends Controller
     public function actionCreate()
     {
         $phone = new Phone();
-        $phone->attributes = \Yii::$app->request->post('Contact');
+        $phone->attributes = \Yii::$app->request->post('Phone');
         $phone->creator_ip = ip2long(\Yii::$app->request->userIP);
 
-        if ($phone->load(Yii::$app->request->post()) && $phone->save()) {
+        if ($phone->save()) {
             return $this->redirect(['/contact/view', 'id' => $phone->contact_id]);
         } else {
             $model = Contact::findOne($phone->contact_id);

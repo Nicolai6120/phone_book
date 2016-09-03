@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'create_date',
                             'header' => 'Добавлен',
                             'value' => function ($data) {
-                                return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y');
+                                return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y hh:mm');
                             },
                         ],
                         [
@@ -112,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 \yii\widgets\Pjax::end();
             ?>
         </div>
-        <div class="col-lg-3 col-lg-offset-1">
+        <div class="col-lg-4 col-lg-offset-1">
 
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
@@ -133,7 +133,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ]
                             ]); ?>
                             <?= $form->field($phone, 'contact_id')->hiddenInput(['value' => $model->id])->label(false); ?>
-                            <?= $form->field($phone, 'number') ?>
+                            <?= $form->field($phone, 'number')->widget(\yii\widgets\MaskedInput::className(), [
+                                'mask' => '+7 (999) 999 99-99',
+                            ]) ?>
                             <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>
                             <?php ActiveForm::end(); ?>
                         </div>
