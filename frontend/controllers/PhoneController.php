@@ -64,13 +64,17 @@ class PhoneController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Phone();
+        $phone = new Phone();
+        $phone->attributes = \Yii::$app->request->post('Contact');
+        $phone->creator_ip = ip2long(\Yii::$app->request->userIP);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($phone->load(Yii::$app->request->post()) && $phone->save()) {
+            return $this->redirect(['/contact/view', 'id' => $phone->contact_id]);
         } else {
-            return $this->render('create', [
+            $model = Contact::findOne($phone->contact_id);
+            return $this->render('/contact/view', [
                 'model' => $model,
+                'phone' => $phone
             ]);
         }
     }
@@ -103,16 +107,15 @@ class PhoneController extends Controller
     public function actionDelete($id)
     {
         $phone = $this->findModel($id);
-        $contactID = $phone->contact_id;
         $phone->delete();
         
         if (Yii::$app->getRequest()->isAjax) {
-            $model = Contact::findOne($contactID);
+            $model = Contact::findOne($phone->contact_id);
             return $this->renderPartial('/contact/view', [
                 'model' => $model
             ]);
         }
-        return $this->redirect(['contact/view', 'id'=>$contactID]);
+        return $this->redirect(['contact/view', 'id'=>$phone->contact_id]);
     }
 
     /**

@@ -102,10 +102,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div id="collapseOne" class="panel-collapse collapse out">
                         <div class="panel-body bg-default">
                             <?php $form = ActiveForm::begin([
+                                'id' => 'add-phone',
+                                'action' => ['phone/create'],
                                 'options' => [
                                     'class' => 'form'
                                 ]
                             ]); ?>
+                            <?= $form->field($phone, 'contact_id')->hiddenInput(['value' => $model->id])->label(false); ?>
                             <?= $form->field($phone, 'number') ?>
                             <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>
                             <?php ActiveForm::end(); ?>
