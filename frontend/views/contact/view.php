@@ -21,16 +21,40 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h2><?= Html::encode($this->title) ?></h2>
 
-    <p>
-        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы действительно хотите удалить этот телефон?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <div class="row">
+        <div class="col-lg-4">
+            <p>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="btn btn-primary">
+                    Изменить
+                </a>
+                <?= Html::a('Удалить', ['contact/delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Вы действительно хотите удалить этот телефон?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+            </p>
+
+            <div id="collapseTwo" class="panel-group collapse out">
+                <div class="panel panel-default">
+                    <div class="panel-body bg-default">
+                        <?php $form = ActiveForm::begin([
+                            'id' => 'update-contact',
+                            'action' => Url::toRoute(['contact/update', 'id'=>$model->id]),
+                            'options' => [
+                                'class' => 'form'
+                            ]
+                        ]); ?>
+                        <?= $form->field($model, 'name') ?>
+                        <?= Html::submitButton('Готово', ['class' => 'btn btn-primary']) ?>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-6">

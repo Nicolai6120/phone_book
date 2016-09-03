@@ -16,6 +16,9 @@ use yii\db\Expression;
  */
 class Contact extends \yii\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
