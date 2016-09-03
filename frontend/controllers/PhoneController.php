@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Phone;
 use common\models\PhoneSearch;
+use common\models\Contact;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -101,9 +102,17 @@ class PhoneController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $phone = $this->findModel($id);
+        $contactID = $phone->contact_id;
+        $phone->delete();
+        
+        if (Yii::$app->getRequest()->isAjax) {
+            $model = Contact::findOne($contactID);
+            return $this->renderPartial('/contact/view', [
+                'model' => $model
+            ]);
+        }
+        return $this->redirect(['contact/view', 'id'=>$contactID]);
     }
 
     /**

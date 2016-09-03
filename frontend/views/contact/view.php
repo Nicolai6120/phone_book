@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = $this->title;
@@ -68,22 +69,18 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => ActionColumn::className(),
                             'template' => '{delete}',
                             'buttons' => [
-                                'delete' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                                        'title' =>'Удалить',
-                                        'data-confirm'=>"Вы действительно хотите удалить этот контакт?",
-                                        'data-pjax'=>'1'
+                                'delete' => function ($url, $data) {
+                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['phone/delete/', 'id'=>$data->id]), [
+                                        'title'=>'Удалить',
+                                        'data' => [
+                                            'method' => 'post',
+                                            'confirm' => "Вы действительно хотите удалить этот телефон?",
+                                        ],
+                                        'data-pjax' => 'w0'
                                     ]);
                                 },
                             ],
                             'contentOptions' => ['class' => 'text-center', 'style' => 'max-width:20px;'],
-
-                            'urlCreator' => function ($action, $model, $key, $index) {
-                                if ($action === 'delete') {
-                                    $url ='/panel/adverts/edition/delete/'.$model->id;
-                                    return $url;
-                                }
-                            }
                         ]
                     ],
                 ]);
