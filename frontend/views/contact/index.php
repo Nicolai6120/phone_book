@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+
 
 $this->title = 'Контакты';
 ?>
@@ -50,9 +52,9 @@ $this->title = 'Контакты';
                             },
                         ],
                         [
-                            'attribute' => 'create_date',
+                            'attribute'=>'create_date',
                             'label'=>'Добавлен',
-                            'value' => function ($data) {
+                            'value'=>function ($data) {
                                 return Yii::$app->formatter->asDate($data->create_date, 'd MMM Y');
                             },
                         ],
@@ -60,22 +62,25 @@ $this->title = 'Контакты';
                             'class' => ActionColumn::className(),
                             'template' => '{delete}',
                             'buttons' => [
-                                'delete' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                                        'title' =>'Удалить',
-                                        'data-confirm'=>"Вы действительно хотите удалить этот контакт?",
-                                        'data-pjax'=>'1'
+                                'delete' => function ($url, $data) {
+                                    return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['contact/delete/', 'id'=>$data->id]), [
+                                        'title'=>'Удалить',
+                                        'data' => [
+                                            'method' => 'post',
+                                            'confirm' => "Вы действительно хотите удалить этот контакт?",
+                                        ],
+                                        'data-pjax' => 'w0'
                                     ]);
                                 },
                             ],
                             'contentOptions' => ['class' => 'text-center', 'style' => 'max-width:20px;'],
 
-                            'urlCreator' => function ($action, $model, $key, $index) {
-                                if ($action === 'delete') {
-                                    $url ='/panel/adverts/edition/delete/'.$model->id;
-                                    return $url;
-                                }
-                            }
+//                            'urlCreator' => function ($action, $data, $key, $index) {
+//                                if ($action === 'delete') {
+//                                    $url = Url::toRoute(['contact/delete/', 'id' => $data->id]);
+//                                    return $url;
+//                                }
+//                            }
                         ]
                     ],
                 ]);
@@ -97,7 +102,8 @@ $this->title = 'Контакты';
                         <div id="collapseOne" class="panel-collapse collapse out">
                             <div class="panel-body bg-default">
                                 <?php $form = ActiveForm::begin([
-                                    'action' => ['phone/create'],
+                                    'id' => 'add-contact',
+                                    'action' => ['contact/create'],
                                     'options' => [
                                         'class' => 'form'
                                     ]

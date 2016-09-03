@@ -3,7 +3,8 @@
 namespace common\models;
 
 use Yii;
-use common\models\Phone;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "contact".
@@ -15,6 +16,18 @@ use common\models\Phone;
  */
 class Contact extends \yii\db\ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'create_date',
+                'updatedAtAttribute' => false,
+                'value' => new Expression('UNIX_TIMESTAMP(NOW())'),
+            ],
+        ];
+    }
+    
     /**
      * @inheritdoc
      */
@@ -29,8 +42,8 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'create_date', 'creator_ip'], 'required'],
-            [['create_date', 'creator_ip'], 'integer'],
+            [['name', 'creator_ip'], 'required'],
+            [['creator_ip'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
     }

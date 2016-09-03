@@ -8,6 +8,7 @@ use common\models\Phone;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * ContactController implements the CRUD actions for Contact model.
@@ -65,11 +66,13 @@ class ContactController extends Controller
     public function actionCreate()
     {
         $model = new Contact();
+        $model->attributes = \Yii::$app->request->post('Contact');
+        $model->creator_ip = ip2long(\Yii::$app->request->userIP);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->save()) {
+            return $this->redirect(['index']);
         } else {
-            return $this->render('create', [
+            return $this->render('index', [
                 'model' => $model,
             ]);
         }
@@ -102,8 +105,14 @@ class ContactController extends Controller
      */
     public function actionDelete($id)
     {
+
         $this->findModel($id)->delete();
 
+        if (Yii::$app->getRequest()->isAjax) {
+            return $this->renderPartial('index', [
+                'model' => new Contact()
+            ]);
+        }
         return $this->redirect(['index']);
     }
 
