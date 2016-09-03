@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'header' => 'Номер',
                             'format' => 'raw',
                             'value' => function ($data) {
-                                return Html::a($data->number, 'tel:'.$data->number);
+                                return Html::a($data->number, urlencode('tel:'.$data->number));
                             },
                         ],
                         [
