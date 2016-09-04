@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Contact */
+/* @var $model common\models\Phone */
 /* @var $phone common\models\Phone */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -62,6 +62,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
                 $dataProvider = new ActiveDataProvider([
                     'query' => $model->getPhones(),
+                    'sort' => [
+                        'defaultOrder' => ['create_date' => SORT_DESC],
+                    ],
                     'pagination' => [
                         'pageSize' => 30,
                     ],
@@ -86,11 +89,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'create_date',
                             'header' => 'Добавлен',
+                            'format' => 'raw',
                             'value' => function ($data) {
                                 return
-                                    Yii::$app->formatter->asDate($data->create_date, 'd MMM Y').
-                                    ' *** '.
-                                    Yii::$app->formatter->asDate($data->create_date, 'hh:mm');
+                                    Yii::$app->formatter->asDate($data->create_date, 'HH:mm').
+                                    ' &nbsp; '.
+                                    Yii::$app->formatter->asDate($data->create_date, 'dd.MM.Y');
                             },
                         ],
                         [
@@ -108,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]);
                                 },
                             ],
-                            'contentOptions' => ['class' => 'text-center', 'style' => 'width:20px;'],
+                            'contentOptions' => ['class' => 'text-center', 'style' => 'width:23px;'],
                         ]
                     ],
                 ]);
