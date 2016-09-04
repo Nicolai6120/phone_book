@@ -59,7 +59,7 @@ $this->title = 'Контакты';
                             'label'=>'Добавлен',
                             'value'=>function ($data) {
                                 return
-                                    Yii::$app->formatter->asDate($data->create_date, 'hh:mm').
+                                    Yii::$app->formatter->asDate($data->create_date, 'HH:mm').
                                     ' &nbsp; '.
                                     Yii::$app->formatter->asDate($data->create_date, 'dd.MM.Y');
                             },
