@@ -45,6 +45,7 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'match', 'pattern'=>'/^[А-яA-z0-9\s-«»]+$/', 'message' => 'Имя содержит недопустимые символы'],
             [['name', 'creator_ip'], 'required'],
             [['creator_ip'], 'integer'],
             [['name'], 'string', 'max' => 255],

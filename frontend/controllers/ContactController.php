@@ -5,10 +5,10 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Contact;
 use common\models\Phone;
+use yii\helpers\BaseHtml;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
 
 /**
  * ContactController implements the CRUD actions for Contact model.
@@ -68,6 +68,7 @@ class ContactController extends Controller
         $model = new Contact();
         $model->attributes = \Yii::$app->request->post('Contact');
         $model->creator_ip = ip2long(\Yii::$app->request->userIP);
+        $model->name = BaseHtml::encode($model->name);
 
         if ($model->save()) {
             return $this->redirect(['index']);
