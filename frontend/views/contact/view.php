@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\BaseHtml;
 use yii\helpers\Url;
 
 $this->title = $model->name;
@@ -83,7 +84,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'header' => 'Номер',
                             'format' => 'raw',
                             'value' => function ($data) {
-                                return Html::a($data->number, urlencode('tel:'.$data->number));
+                                $url = Url::to(urlencode(BaseHtml::encode('tel:'.$data->number)));
+                                return Html::a($data->number, $url);
                             },
                         ],
                         [
